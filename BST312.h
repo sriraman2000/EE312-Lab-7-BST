@@ -243,6 +243,23 @@ template<class ItemType>
 void BST_312 <ItemType>::makeEmpty(TreeNode*& t)
 {
     //YOUR CODE GOES HERE
+    if(t->left != NULL)
+    {
+        makeEmpty(t->left);
+    }
+    else
+    {
+        delete(t->left);
+    }
+    if(t->right != NULL)
+    {
+        makeEmpty(t->right);
+    }
+    else
+    {
+        delete(t->right);
+    }
+
 }
 
 template<class ItemType>
@@ -282,6 +299,48 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
 {
 
     //YOUR CODE GOES HERE
+    if(t == NULL) // if the tree is empty
+    {
+        TreeNode ins;       // initialize/create a new treeNode
+        TreeNode *inserted = &ins;
+        inserted->data = newItem;
+        inserted->right = NULL;
+        inserted->left = NULL;
+        if(t->data )
+        t->right = inserted; // choose to insert it into the right hand side of the tree node
+    }
+    else if(newItem >= t->data) // if the new item is the same as one of the existing items, just put it on the right
+    {
+        if(t->right == NULL)
+        {
+            TreeNode ins;       // initialize/create a new treeNode
+            TreeNode *inserted = &ins;
+            inserted->data = newItem;
+            inserted->right = NULL;
+            inserted->left = NULL;
+            t->right = inserted; // insert node
+        }
+        else
+        {
+            insertItem(t->right, newItem);
+        }
+    }
+    else if(newItem < t->data)
+    {
+        if(t->left == NULL)
+        {
+            TreeNode ins;       // initialize/create a new treeNode
+            TreeNode *inserted = &ins;
+            inserted->data = newItem;
+            inserted->right = NULL;
+            inserted->left = NULL;
+            t->right = inserted; // insert node
+        }
+        else
+        {
+            insertItem(t->left, newItem);
+        }
+    }
 
 }
 
@@ -289,6 +348,7 @@ template<class ItemType>
 void BST_312 <ItemType>::insertItem(const ItemType& newItem)
 {
     //YOUR CODE GOES HERE
+    insertItem(root, newItem);
 }
 
 
@@ -297,7 +357,15 @@ template<class ItemType>
 int BST_312 <ItemType>::countNodes(TreeNode* t) const
 {
     //YOUR CODE GOES HERE
-
+    int count = 0;
+    if(t == NULL)
+    {
+        return count;
+    }
+    else
+    {
+        return countNodes(t->left) + countNodes(t->right) + 1; // the current Node is added to the sum of its predecessors
+    }
 }
 
 
@@ -305,6 +373,7 @@ template<class ItemType>
 int BST_312 <ItemType>::countNodes()
 {
     //YOUR CODE GOES HERE
+    return countNodes(root);
 }
 
 template<class ItemType>
@@ -352,6 +421,36 @@ bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
 {
 
     //YOUR CODE GOES HERE
+    if(root == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        if(root->data == item)
+        {
+            return true;
+        }
+        else
+        {
+            TreeNode *t = root;
+            while(t != NULL)
+            {
+                if(item > t->data)
+                {
+                    t = t->right;
+                }
+                else if(item < t->data)
+                {
+                    t = t->left;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+    }
 
 }
 
