@@ -306,7 +306,6 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
         inserted->data = newItem;
         inserted->right = NULL;
         inserted->left = NULL;
-        if(t->data )
         t->right = inserted; // choose to insert it into the right hand side of the tree node
     }
     else if(newItem >= t->data) // if the new item is the same as one of the existing items, just put it on the right
@@ -380,6 +379,14 @@ template<class ItemType>
 void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
     //YOUR CODE GOES HERE
+    if(t == NULL)
+    {
+        return;
+    }
+    result.push_back(t->data);
+    preOrderTraversal(t->left, result);
+    postOrderTraversal(t->right, result);
+
 }
 
 
@@ -387,6 +394,9 @@ template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::preOrderTraversal()
 {
     //YOUR CODE GOES HERE
+    vector<ItemType> preOrder;
+    preOrderTraversal(root, preOrder);
+    return preOrder;
 
 }
 
@@ -394,26 +404,44 @@ template<class ItemType>
 void BST_312 <ItemType>::inOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
     //YOUR CODE GOES HERE
-
+    if(t == NULL)
+    {
+        return;
+    }
+    postOrderTraversal(t->left, result);
+    result.push_back(t->data);
+    postOrderTraversal(t->right, result);
 }
 
 template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::inOrderTraversal()
 {
     //YOUR CODE GOES HERE
+    vector<ItemType> inOrder;
+    inOrderTraversal(root, inOrder);
+    return inOrder;
 }
 
 template<class ItemType>
 void BST_312 <ItemType>::postOrderTraversal(TreeNode* t,vector<ItemType>& result) const
 {
-
     //YOUR CODE GOES HERE
+    if(t == NULL)
+    {
+        return;
+    }
+    postOrderTraversal(t->left, result);
+    postOrderTraversal(t->right, result);
+    result.push_back(t->data);
 }
 
 template<class ItemType>
 vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 {
     //YOUR CODE GOES HERE
+    vector<ItemType> postOrder;
+    postOrderTraversal(root, postOrder);
+    return postOrder;
 }
 
 template<class ItemType>
