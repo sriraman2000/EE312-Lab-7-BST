@@ -301,23 +301,24 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
     //YOUR CODE GOES HERE
     if(t == NULL) // if the tree is empty
     {
-        TreeNode ins;       // initialize/create a new treeNode
-        TreeNode *inserted = &ins;
+        TreeNode *inserted = new TreeNode;
         inserted->data = newItem;
         inserted->right = NULL;
         inserted->left = NULL;
-        t->right = inserted; // choose to insert it into the right hand side of the tree node
+        t = inserted; // choose to insert it into the right hand side of the tree node
+//        cout << "first" << endl;
     }
     else if(newItem >= t->data) // if the new item is the same as one of the existing items, just put it on the right
     {
+  //      cout << "right" << endl;
+
         if(t->right == NULL)
         {
-            TreeNode ins;       // initialize/create a new treeNode
-            TreeNode *inserted = &ins;
+            TreeNode *inserted = new TreeNode;
             inserted->data = newItem;
             inserted->right = NULL;
             inserted->left = NULL;
-            t->right = inserted; // insert node
+            t->right = inserted; // choose to insert it into the right hand side of the tree node
         }
         else
         {
@@ -326,21 +327,22 @@ void BST_312 <ItemType>::insertItem(TreeNode*& t, const ItemType& newItem)
     }
     else if(newItem < t->data)
     {
+  //      cout << "left" << endl;
+
         if(t->left == NULL)
         {
-            TreeNode ins;       // initialize/create a new treeNode
-            TreeNode *inserted = &ins;
+            TreeNode *inserted = new TreeNode;
             inserted->data = newItem;
             inserted->right = NULL;
             inserted->left = NULL;
-            t->right = inserted; // insert node
+            t->left = inserted; // choose to insert it into the right hand side of the tree node
         }
         else
         {
             insertItem(t->left, newItem);
         }
     }
-
+  //  cout << "donzo" << endl;
 }
 
 template<class ItemType>
@@ -385,7 +387,7 @@ void BST_312 <ItemType>::preOrderTraversal(TreeNode* t,vector<ItemType>& result)
     }
     result.push_back(t->data);
     preOrderTraversal(t->left, result);
-    postOrderTraversal(t->right, result);
+    preOrderTraversal(t->right, result);
 
 }
 
@@ -408,9 +410,9 @@ void BST_312 <ItemType>::inOrderTraversal(TreeNode* t,vector<ItemType>& result) 
     {
         return;
     }
-    postOrderTraversal(t->left, result);
+    inOrderTraversal(t->left, result);
     result.push_back(t->data);
-    postOrderTraversal(t->right, result);
+    inOrderTraversal(t->right, result);
 }
 
 template<class ItemType>
@@ -447,7 +449,6 @@ vector<ItemType> BST_312 <ItemType>::postOrderTraversal()
 template<class ItemType>
 bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
 {
-
     //YOUR CODE GOES HERE
     if(root == NULL)
     {
@@ -479,7 +480,7 @@ bool BST_312 <ItemType>::isItemInTree(const ItemType& item)
             }
         }
     }
-
+    return false;
 }
 
 

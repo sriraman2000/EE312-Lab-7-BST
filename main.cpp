@@ -33,6 +33,7 @@ int main() {
         bst.insertItem(s);
         inFile >> s;
     }
+    cout << bst.countNodes() << endl;
 
     cout << "postorder traversal is " << endl;
     print(bst.postOrderTraversal());
@@ -54,6 +55,12 @@ int main() {
     cout << endl;
     cout << "number of nodes in tree after delete is " << bst.countNodes() << endl;
     cout << endl;
+
+    cout << bst.isItemInTree("seriesa") << endl;
+    cout << bst.isItemInTree("words") << endl;
+    cout << bst.isItemInTree("This") << endl;
+
+
 
 }
 
